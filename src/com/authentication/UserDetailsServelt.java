@@ -40,9 +40,8 @@ public class UserDetailsServelt extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		  String firstname=req.getParameter("firstname");
+		    String firstname=req.getParameter("firstname");
 	        String lastname=req.getParameter("lastname");
-	        
 	        String email=req.getParameter("email");
 	        String address1=req.getParameter("address1");
 	        String address2=req.getParameter("address2");
@@ -51,9 +50,7 @@ public class UserDetailsServelt extends HttpServlet {
 	        Integer pincode=Integer.parseInt(req.getParameter("pincode"));
 	        String mobile=req.getParameter("mobile");
 	        userdetails details=new userdetails();
-	       
-	      
-	       details.setFirstname(firstname);
+	        details.setFirstname(firstname);
 	       details.setLastname(lastname);
 	       details.setMobile(mobile);
 	       details.setEmail(email);

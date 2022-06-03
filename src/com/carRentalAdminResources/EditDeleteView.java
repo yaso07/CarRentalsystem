@@ -13,11 +13,12 @@ public class EditDeleteView {
 		Connection connect=jdbc_connection.getconnect();
 	 
 	       
-		PreparedStatement ps=connect.prepareStatement("update public.addcar	SET vehicle=?, prize=?, type=?	WHERE vehicle=? ");
+		PreparedStatement ps=connect.prepareStatement("update public.addcar	SET vehicle=?, prize=?, type=?,no_of_cars=?	WHERE vehicle=? ");
 	    ps.setString(1,editcar.getVehicleBrand());
 		ps.setLong(2,editcar.getPrice());
 		ps.setString(3,editcar.getType());
-		ps.setString(4, vehicle);
+		ps.setInt(4,editcar.getNoOfCars());
+		ps.setString(5, vehicle);
 		 
 		ps.executeUpdate();
 	    ps.close();
@@ -31,7 +32,7 @@ public class EditDeleteView {
     	
 	    Connection connect=jdbc_connection.getconnect();
 	 
-	   PreparedStatement ps=connect.prepareStatement("select * from public.addcar where vehicle=? ");
+	   PreparedStatement ps=connect.prepareStatement("select * from public.addcar where vehicle=? order by vehicle asc ");
 	   ps.setString(1, vehicle);
 	  ResultSet result=ps.executeQuery();
 	  while(result.next())
@@ -39,6 +40,7 @@ public class EditDeleteView {
 	  temp.setVehicleBrands(result.getString(1));
       temp.setPrice(result.getLong(2));
       temp.setType(result.getString(3));
+      temp.setNoOfCars(result.getInt(4));
 	  }
 	  
 	  result.close();

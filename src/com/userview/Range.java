@@ -11,6 +11,10 @@ public class Range {
 		// TODO Auto-generated method stub
 		
 		Connection connect=jdbc_connection.getconnect();
+		if(connect==null)
+		{
+			connect=jdbc_connection.getconnect();
+		}
 		PreparedStatement ps=connect.prepareStatement("select vehicle from addcar order by prize desc");
 		ResultSet rs=ps.executeQuery();
 		 
@@ -27,19 +31,28 @@ public class Range {
 		 
 		return set;
 	}
-	public static LinkedHashSet<String> setRangeWDOption(ResultSet rs,String car_option) throws SQLException
+	public static LinkedHashSet<String> setRangeWDOption(String value,String car_option) throws SQLException, ClassNotFoundException
 	{
 		LinkedHashSet<String> set=new LinkedHashSet<>();
+		Connection connect=jdbc_connection.getconnect();
+		if(connect==null)
+		{
+			connect=jdbc_connection.getconnect();
+		}
+		//String[] split=car_option.split(" ");
+		PreparedStatement ps=connect.prepareStatement("select vehicle from addcar where vehicle like ?  order by vehicle asc");
+		ps.setString(1, car_option + "%");
+		 
+		ResultSet rs=ps.executeQuery();
 		while(rs.next())
 		{
-			if(rs.getString(1).contains(car_option))
-			{
-		  	  set.add(rs.getString(1));
-			}
+			 
+			set.add(rs.getString(1));
 		}
 		 
 		return set;
 	}
+	 
 	
 	
 
@@ -50,6 +63,10 @@ class lowRange extends Range
 		// TODO Auto-generated method stub
 		
 		Connection connect=jdbc_connection.getconnect();
+		if(connect==null)
+		{
+			connect=jdbc_connection.getconnect();
+		}
 		PreparedStatement ps=connect.prepareStatement("select vehicle from addcar order by prize asc");
 		ResultSet rs=ps.executeQuery();
 		 
@@ -64,6 +81,10 @@ class midRange extends lowRange
 		// TODO Auto-generated method stub
 		
 		Connection connect=jdbc_connection.getconnect();
+		if(connect==null)
+		{
+		   connect=jdbc_connection.getconnect();
+		}
 		PreparedStatement ps=connect.prepareStatement("select vehicle from addcar where prize>1500 and prize<5000");
 		ResultSet rs=ps.executeQuery();
 	 

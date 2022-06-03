@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
   
- <%@ page import = "com.carRentalAdminResources.*,java.util.*" %> 
+ <%@ page import = "com.carRentalAdminResources.*,java.util.*,com.booking.*" %> 
  <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,12 +60,20 @@
     
 </head>
 <body>
+
+<%
+	HttpServletResponse httpResponse = (HttpServletResponse) response;
+	httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+	httpResponse.setHeader("Pragma", "no-cache"); // HTTP 1.0
+	httpResponse.setDateHeader("Expires", 0);
+%>
+		
  <%
-   String user=(String)session.getAttribute("name");
+  String user=(String)session.getAttribute("name");
   if(user==null)
-   {
-   response.sendRedirect("userlogin.jsp");
-   }
+  {
+	  response.sendRedirect("userlogin.jsp");
+  }
    System.out.println(user);
    
   %>
@@ -79,8 +87,7 @@
 
  <form action="searchServlet" method="post">
 <div class="row">
-  
-       <div class="col input-group">
+  <div class="col input-group">
 	    <span class="input-group-text" id="basic-addon1">Price</span>
 	    <select name="options" required>
 	        <option value="high">High to Low</option>
@@ -88,25 +95,14 @@
 	        <option value="mid">medium Range</option>
 	    </select>
    </div>
-   <%  
-      
-   ArrayList<Addcar> cars=ViewCarDb.viewcar(); 
-    
-  
-    %>
-	<div class="col input-group" style="position:relative;right:100px;">
-	    <span class="input-group-text" id="basic-addon1">Select Cars</span>
-	    <input required  class="form-control" list="datalistOptions" name="datalist"  id="exampleDataList" placeholder="Type to search..." aria-describedby="basic-addon1">
-	<datalist id="datalistOptions">
-	 <option value="All">
-	<%
+            
+        
+	 	<div  class="col input-group" style="position:relative;right:100px;">
+	    
+	    <input  class="form-control"   name="datalist"  id="exampleDataList" placeholder="Type to search..." aria-describedby="basic-addon1" >
+ 
 	
-	
-	for(Addcar car:cars){%>
-	   
-	  <option value="<%=car.getVehicleBrand() %>">
-	 <%} %>
-	</datalist>
+	 
 	</div>
     <div class="col">
 
@@ -118,6 +114,7 @@
 <div class="cardslot">
  
  <%
+ CheckingAvailability.getdata((String)session.getAttribute("pickupdate"),(String)session.getAttribute("dropdate"));
 
  ArrayList<Addcar> filter=ViewCarDb.getfilter();
    for(Addcar filt:filter) { %>
@@ -126,7 +123,7 @@
     <img src="..." class="card-img-top" alt="...">
     <div class="card-body">
       <h5 class="card-title"></h5>
-      <p class="card-text"><%=filt.getVehicleBrand() %> <br><%= filt.getPrice() %> <br><%=filt.getType() %><br>
+      <p class="card-text"><%=filt.getVehicleBrand()%> <br><%= filt.getPrice() %> <br><%=filt.getType() %><br>
       </p>
      <a href="BookingServlet?name=<%=filt.getVehicleBrand() %>" class="btn btn-primary">Book</a>
     </div>

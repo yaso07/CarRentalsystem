@@ -78,16 +78,23 @@
 
     
    
-  </head>
-  <body>
- <%
- String username=(String)session.getAttribute("username");
- if(username==null)
-  {
-    response.sendRedirect("adminlogin.jsp");
-  }
- 
- %>
+ </head>
+ <body>
+ <% 
+  HttpServletResponse httpResponse = (HttpServletResponse) response;
+		httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+		httpResponse.setHeader("Pragma", "no-cache"); // HTTP 1.0
+		httpResponse.setDateHeader("Expires", 0);
+%>
+<%
+ String USER=(String)session.getAttribute("name");
+   if(USER==null)
+   {
+	   response.sendRedirect("../userlogin.jsp");
+	  
+   }
+   %>
+   
  
 <main>
   
@@ -101,7 +108,7 @@
        <div style="display:inline-block;"  class="list-group list-group-flush border-bottom scrollarea">
 				        <form action="../UserSearchServlet" method="post">
 						           <div class="d-flex align-items-center flex-shrink-0 p-3">
-						           <select  class="form-select" name="options" aria-label="Default select example">
+						           <select  class="form-select" name="options" aria-label="Default select example" required>
 						                    <option selected>Open this select menu</option>
 						                    <option value="firstname">Search by name</option>
 						                   <option value="email">by email</option>
@@ -109,7 +116,7 @@
 						                     <option value="all">All</option>
 						                    <option value=""></option>
 						                  </select>
-						                <input style="margin-left:5px"  class="form-control" name="search"   placeholder="Type to search..." >
+						                <input style="margin-left:5px"  class="form-control" name="search"   placeholder="Type to search..." required >
 						            <button style="margin-left:5px"  class="btn btn-primary">search</button>
 						            
 						            
@@ -117,7 +124,14 @@
 						            
 						   </form> 
 						           <% ArrayList<userdetails> user=UserDetailsDb.getuserdetails();%>
-						          <% for(userdetails User:user){ %>
+						          <% for(userdetails User:user){ 
+						              
+						             if(User.getFirstname()==null)
+						             {
+						            	 
+						            	 continue;
+						             }
+						          %>
 	      <a style="width:350px;display:inline-block;" onclick="visible()" href="memberspage.jsp?id=<%=User.getId() %>" class="list-group-item py-3 lh-tight act" aria-current="true">
 		            <div class="d-flex w-100 align-items-center justify-content-between">
 		              <strong class="d-flex mb-1"><%=User.getFirstname() %> <p style="margin-left:5px">  <%=User.getLastname() %></p> </strong>

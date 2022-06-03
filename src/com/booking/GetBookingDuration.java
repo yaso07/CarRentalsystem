@@ -1,7 +1,8 @@
 package com.booking;
+import java.util.*;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -48,26 +49,24 @@ public class GetBookingDuration extends HttpServlet {
 		String location=req.getParameter("options");
 		String startdate=req.getParameter("start");
 		String enddate=req.getParameter("end");
-		 
- 
-
+		
+		
+        
 		LocalDate dateBefore = LocalDate.parse(startdate);
 		LocalDate dateAfter = LocalDate.parse(enddate);
-			
-	 
-		long noOfDays = ChronoUnit.DAYS.between(dateBefore, dateAfter);
+		
+        long noOfDays = ChronoUnit.DAYS.between(dateBefore, dateAfter);
 		HttpSession session=req.getSession();
 		 
-	 
+	    System.out.println(noOfDays);
 		
 		session.setAttribute("pickupdate",startdate);
 		session.setAttribute("dropdate",enddate);
 		session.setAttribute("location",location);
 		session.setAttribute("totaldays",noOfDays);
-	 
+	     
         res.sendRedirect("CarRentalViewpage.jsp");
-	   
-		 
+        
 		
 	}
 

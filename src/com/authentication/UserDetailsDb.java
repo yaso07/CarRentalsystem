@@ -126,7 +126,7 @@ public class UserDetailsDb {
    	  }
    	    
    	   ps.close();
-		connect.close();
+	   connect.close();
    	  
 		return user;
    	  
@@ -137,7 +137,7 @@ public class UserDetailsDb {
 		 PreparedStatement ps=connect.prepareStatement("UPDATE public.userdetails"
 		 		+ "	SET firstname=?, lastname=?, email=?,mobile=?, address1=?, address2=?, country=?, state=?, pincode=?"
 		 		+ "	WHERE username=?");
-		  System.out.println(username);
+		  
 		 ps.setString(1,user.getFirstname());
 		 ps.setString(2,user.getLastname());
 		 ps.setString(3,user.getEmail());
@@ -151,5 +151,16 @@ public class UserDetailsDb {
 		 ps.executeUpdate();
 		 ps.close();
 		connect.close();
+	 }
+	 public static void resetPass(String username,String password) throws ClassNotFoundException, SQLException
+	 
+	 {
+		 Connection connect=jdbc_connection.getconnect();
+		 PreparedStatement ps=connect.prepareStatement("update userdetails set password=? where username=?" );
+		 ps.setString(1, password);
+		 ps.setString(2, username);
+		 ps.executeUpdate();
+		 ps.close();
+		 connect.close();
 	 }
 }

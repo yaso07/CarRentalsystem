@@ -40,26 +40,35 @@ top:40px;
 </style>
 </head>
 <body>
- <%
- String user=(String)session.getAttribute("username");
- if(user==null)
-  {
-    response.sendRedirect("adminlogin.jsp");
-  }
- 
- %>
-
+<% 
+  HttpServletResponse httpResponse = (HttpServletResponse) response;
+		httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+		httpResponse.setHeader("Pragma", "no-cache"); // HTTP 1.0
+		httpResponse.setDateHeader("Expires", 0);
+%>
+<%
+ String user=(String)session.getAttribute("name");
+   if(user==null)
+   {
+	   response.sendRedirect("userlogin.jsp");
+	  
+   }
+   %>
+   
 <p class="h3 $primary">Add Car</p> 
 <a id="editpage" href="EditDeleteCar.jsp"> <button   class="btn btn-primary">Car Data</button></a>
 <a id="memberpage" href="membersContent/memberspage.jsp"> <button   class="btn btn-primary">Member Data</button></a>
-  <a id="logout" class="btn btn-danger" href="AdminLogoutServlet">Logout</a>
+  <a id="logout" class="btn btn-danger" href="LogoutServlet">Logout</a>
 <div class="box">
 <form action="AddcarServlet" method="post">
  <table class="table table-striped border border-4">
        <tr>
-          <td>Vehicle&Model:    <input type="text" name="vehicle" required></td>
+          <td>Vehicle&Model:    <input type="text" name="vehicle" required></td></tr>
        <tr>
        <td>Price per/day:    <input type="number" name="price" required></td>
+       </tr>
+        <tr>
+       <td>No Of Cars:    <input type="number" name="available" required></td>
        </tr>
        <tr>
         

@@ -22,10 +22,12 @@ public class UserLoginServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
+	
     public UserLoginServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
+    
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,10 +49,26 @@ public class UserLoginServlet extends HttpServlet {
            try {
 			Boolean valid=adminUserValidation.uservalidation(username,password);
 			 if(valid==true)
-	           {
-	        	  res.sendRedirect("UserFirstpage.jsp");  
-	        	  HttpSession session=req.getSession();  
-	              session.setAttribute("name",username);  
+		           { 
+				      
+				 if(username.equals("yaso") && password.equals("yaso4456"))
+		             {
+		        	    HttpSession session=req.getSession();  
+			            session.setAttribute("name",username); 
+		        	    res.sendRedirect("adminfirstpage.jsp");
+		             }
+		           else if(password.equals(username+"@reset"))
+		           {
+		        	   HttpSession sess =req.getSession();
+		        	   sess.setAttribute("username",username);
+		        	   res.sendRedirect("resetPassword.jsp");
+		           }
+		           else
+		           {
+		        	  res.sendRedirect("UserFirstpage.jsp");  
+		        	  HttpSession session=req.getSession();  
+		              session.setAttribute("name",username);  
+		           }
 	           }
 			 else
 			 {

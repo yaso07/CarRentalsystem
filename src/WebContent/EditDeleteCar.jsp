@@ -47,7 +47,7 @@
     margin-left: 30px;
     border: 2px solid rgb(228, 220, 220);
     width: 70%;
-    height: 70%;
+    height: 80%;
     padding: 20px;
   }
   .box select{
@@ -55,7 +55,7 @@
     width: 300px;
   }
   label{
-    margin-left: 70px;
+   margin-left: 70px;
   }
   input{
     padding: 5px;
@@ -65,6 +65,7 @@
      positin:relative;
    
      margin-left:200px; 
+     margin-top:58px;
   }
   #another{
    position:relative;
@@ -77,7 +78,7 @@
     height: 40px;
     width: 70px;
     position: absolute;
-    top: 80%;
+    top: 86%;
     margin-left: 30px;
 
   }
@@ -104,14 +105,7 @@
    
   </head>
   <body>
-  <%
- String user=(String)session.getAttribute("username");
- if(user==null)
-  {
-    response.sendRedirect("adminlogin.jsp");
-  }
- 
- %>
+  
  
 <main>
   
@@ -125,7 +119,7 @@
         <div class="list-group list-group-flush border-bottom scrollarea"  id="acti">
         <%
     
-          ArrayList<Addcar> cars=ViewCarDb.viewcar();
+          ArrayList<Addcar> cars=ViewCarDb.getAdminView();
         for(Addcar car:cars){ %>
     
           <a  href="EditDeleteCar.jsp?name=<%=car.getVehicleBrand() %>" class="list-group-item list-group-item-action py-3 lh-tight act"  aria-current="true">
@@ -155,7 +149,11 @@
    <br>
    <label for="">Price</label>
    <input id="prize" style="margin-top:20px;margin-left:20px" name="price" required placeholder="<%=temp_car.getPrice() %>" type="number" ><br>
-   <label for="">Type</label>
+   <label for="">No Of Cars</label>
+   <input type="number"  style="margin-top:20px;margin-right:10px;"  name="available" placeholder="<%=temp_car.getNoOfCars()%>" required>
+    <br>
+    <label for="">Type</label>
+
    <select id="type" style="margin-top:20px;display:inline-block;margin-left:20px" required name="options" class="form-select" aria-label="Disabled select example"  name="options" required>
     <option selected><%=temp_car.getType()%></option>
      <option value="compact">Compact</option>

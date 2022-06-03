@@ -6,7 +6,8 @@ import java.util.ArrayList;
 
 public class bookingdetails {
     private String username,carname,pickdate,dropdate,location,type;
-    private int id;
+    private int id; 
+    public static int maximumbooks=0;
     public String getType() {
 		return type;
 	}
@@ -15,7 +16,7 @@ public class bookingdetails {
 		this.type = type;
 	}
 
-	public static int maximumbooks=0;
+	
     public String getUsername() {
 		return username;
 	}
@@ -85,7 +86,7 @@ public class bookingdetails {
 	{
 	    ArrayList<bookingdetails> list=new ArrayList<>();
 	    Connection connect=jdbc_connection.getconnect();
-	    PreparedStatement ps=connect.prepareStatement("select car,type,dropdate,totalcost,id from bookingdetails where username=?");
+	    PreparedStatement ps=connect.prepareStatement("select carname,type,dropdate,totalcost,id from bookingdetails where username=?");
 	    ps.setString(1, name);
 	    ResultSet rs=ps.executeQuery();
 	    while(rs.next())
@@ -111,7 +112,7 @@ class BookingDb extends bookingdetails{
 		 
 		 Connection connect=jdbc_connection.getconnect();
 		 PreparedStatement ps=connect.prepareStatement("INSERT INTO public.bookingdetails"
-		 		+ " (username,car,totalcost,totaldays,pickdate,dropdate,location) VALUES (?,?, ?, ?, ?, ?, ?);");
+		 		+ " (username,carname,totalcost,totaldays,pickdate,dropdate,location,type) VALUES (?,?, ?, ?, ?, ?, ?,?);");
 		 ps.setString(1,book.getUsername());
 		 ps.setString(2,book.getCarname());
 		 ps.setLong(3,book.getTotalcost());
@@ -119,18 +120,32 @@ class BookingDb extends bookingdetails{
 		 ps.setString(5,book.getPickdate());
 		 ps.setString(6,book.getDropdate());
 		 ps.setString(7,book.getLocation());
+		 ps.setString(8,book.getType());
 		 ps.executeUpdate();
 		 ps.close();
 		 connect.close();
 		
 	}
-	public static void cancelbooking(Integer id) throws SQLException, ClassNotFoundException
+	public static String cancelbooking(Integer id) throws SQLException, ClassNotFoundException
 	{
 		Connection connect=jdbc_connection.getconnect();
+		String carname = null;
+		PreparedStatement ps1=connect.prepareStatement("select carname from bookingdetails where id=?");
+		ps1.setInt(1,id);
+		ResultSet rs=ps1.executeQuery();
+       while( rs.next())
+       {
+    	   
+            carname=rs.getString(1);
+       }
 		PreparedStatement ps=connect.prepareStatement("delete from bookingdetails where id=?");
 		ps.setInt(1, id);
 		ps.executeUpdate();
 		ps.close();
+		
+		 
+	 return carname;
+
 	}
 	
 }

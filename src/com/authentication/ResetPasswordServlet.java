@@ -1,4 +1,4 @@
-package com.userview;
+package com.authentication;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -8,18 +8,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.carRentalAdminResources.jdbc_connection;
+import com.sun.jdi.connect.spi.Connection;
 
 /**
- * Servlet implementation class searchServlet
+ * Servlet implementation class ResetPasswordServlet
  */
-@WebServlet("/searchServlet")
-public class searchServlet extends HttpServlet {
+@WebServlet("/ResetPasswordServlet")
+public class ResetPasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public searchServlet() {
+    public ResetPasswordServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,30 +41,14 @@ public class searchServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		 String range=(request.getParameter("options"));
-		 String car_option=request.getParameter("datalist");
-	     System.out.println(car_option);
-		 if(car_option.equals(""))
-		 {
-			 
-				 
-						try {
-							CarDatalist.search(range);
-						} catch (ClassNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-				 
-			 
-		 }
-		 else
-		 {
-			  
-				try {
-					CarDatalist.search(range,car_option);
+	     HttpSession session=request.getSession();
+	     String username=(String)session.getAttribute("username");
+	     String password=request.getParameter("password");
+	     
+	    
+		     	try {
+					UserDetailsDb.resetPass(username, password);
+					response.sendRedirect("userlogin.jsp");
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -68,10 +56,8 @@ public class searchServlet extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		 }
-		   response.sendRedirect("searchfilterpage.jsp");
-		 }
-		 
+	     
+	     
 	}
 
-
+}

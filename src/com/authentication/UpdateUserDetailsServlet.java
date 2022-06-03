@@ -66,7 +66,7 @@ public class UpdateUserDetailsServlet extends HttpServlet {
 	       String username=((String)session.getAttribute("name"));
 	       try {
 			UserDetailsDb.update(details, username);
-			res.sendRedirect("CarRentalViewpage.jsp");
+			res.sendRedirect("membersContent/profilepage.jsp");
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

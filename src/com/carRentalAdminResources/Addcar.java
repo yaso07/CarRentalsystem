@@ -3,7 +3,9 @@ package com.carRentalAdminResources;
 public class Addcar {
 	
    private String vehicleBrand, type;
-   private long price;
+   long price;
+   private int noOfCars;
+   public  int availableCars=0;
 
    public String getVehicleBrand() {
 		return vehicleBrand;
@@ -32,7 +34,15 @@ public void setPrice(long price) {
 	this.price = price;
 }
 
+public int getNoOfCars() {
+	return noOfCars;
+}
 
+public void setNoOfCars(int noOfCars) {
+	this.noOfCars = noOfCars;
+}
+
+ 
 	
 
 }

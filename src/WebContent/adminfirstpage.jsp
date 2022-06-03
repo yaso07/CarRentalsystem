@@ -27,7 +27,7 @@
   display:flex;
   flex-diection:row;
   position:absolute;
-  left:70%;
+  left:60%;
   padding:10px;
   
  
@@ -35,7 +35,7 @@
 .header>a{
  margin-left:40px;
 }
-
+ 
 
 
 
@@ -44,23 +44,11 @@
 </head>
 <body>
 <%
-HttpServletResponse httpResponse = (HttpServletResponse) response;
-httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
-httpResponse.setHeader("Pragma", "no-cache"); // HTTP 1.0
-httpResponse.setDateHeader("Expires", 0);
+   	HttpServletResponse httpResponse = (HttpServletResponse) response;
+	httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+	httpResponse.setHeader("Pragma", "no-cache"); // HTTP 1.0
+	httpResponse.setDateHeader("Expires", 0);
 %>
-<%
-
-String  a=(String)session.getAttribute("alert");
-if( a!=null && a.equals("alert"))
-{
-	%>
-	<script>
-	   alert("booking limit reached");
-	</script>
-<% session.setAttribute("alert", "null"); }%>
-
-
 <%
  String user=(String)session.getAttribute("name");
    if(user==null)
@@ -71,6 +59,7 @@ if( a!=null && a.equals("alert"))
    %>
    
    <div class="header">
+    <a  class="btn btn-secondary" href="addcarpage.jsp">manage cars and members</a>
  <a id="canvas" class="btn btn-secondary" href="membersContent/profilepage.jsp">My Profile</a>
   <a id="logout" class="btn btn-secondary" href="LogoutServlet">Logout</a>
  </div>

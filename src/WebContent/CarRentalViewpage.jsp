@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
   
- <%@ page import = "com.carRentalAdminResources.*,java.util.*,com.userview.*" %>
+ <%@ page import = "com.carRentalAdminResources.*,java.util.*,com.userview.*,com.booking.*" %>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -48,8 +48,6 @@
   position:absolute;
   left:70%;
   padding:10px;
-  
- 
 }
 .header>a{
  margin-left:40px;
@@ -59,6 +57,25 @@
     
 </head>
 <body>
+<%
+HttpServletResponse httpResponse = (HttpServletResponse) response;
+httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+httpResponse.setHeader("Pragma", "no-cache"); // HTTP 1.0
+httpResponse.setDateHeader("Expires", 0);
+%>
+<%
+
+String  a=(String)session.getAttribute("alert");
+if( a!=null && a.equals("alert"))
+{
+	%>
+	<script>
+	   alert("car booked successfully");
+	</script>
+<% session.setAttribute("alert", "null"); }%>
+
+
+
  <%
    String user=(String)session.getAttribute("name");
   if(user==null)
@@ -68,8 +85,9 @@
  
    
  %>
+ 
  <div class="header">
- <a id="canvas" class="btn btn-secondary" href="membersContent/profilepage.jsp">My Profile</a>
+ 
   <a id="logout" class="btn btn-secondary" href="LogoutServlet">Logout</a>
  </div>
   
@@ -89,18 +107,14 @@
 	    </select>
    </div>
    <%  
-      
-      ArrayList<Addcar> cars=ViewCarDb.viewcar(); %>
+   CheckingAvailability.getdata((String)session.getAttribute("pickupdate"),(String)session.getAttribute("dropdate"));
+    ArrayList<Addcar> cars=CheckingAvailability.viewcar(); %>
 	<div class="col input-group" style="position:relative;right:100px;">
-	    <span class="input-group-text" id="basic-addon1">Select Cars</span>
-	    <input  class="form-control" list="datalistOptions" name="datalist"  id="exampleDataList" placeholder="Type to search..." aria-describedby="basic-addon1" required>
-	<datalist id="datalistOptions">
-	 <option value="All">
-	<%for(Addcar car:cars){%>
+	    
+	    <input  class="form-control"   name="datalist"  id="exampleDataList" placeholder="Type to search..." aria-describedby="basic-addon1" >
+ 
+	
 	 
-	  <option value="<%=car.getVehicleBrand() %>">
-	 <%} %>
-	</datalist>
 	</div>
     <div class="col">
 

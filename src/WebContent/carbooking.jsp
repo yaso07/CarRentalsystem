@@ -50,7 +50,10 @@
 <body>
    
  <%
- 
+ HttpServletResponse httpResponse = (HttpServletResponse) response;
+ httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+ httpResponse.setHeader("Pragma", "no-cache"); // HTTP 1.0
+ httpResponse.setDateHeader("Expires", 0);
  %>
     <%
     String user=(String)session.getAttribute("name");
@@ -63,7 +66,7 @@
     Date pickupdate=formatter1.parse((String)session.getAttribute("pickupdate"));
     Date dropdate=formatter1.parse((String)session.getAttribute("dropdate"));
     SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");  
- 
+    
    
      String Date1 = formatter.format(pickupdate);
      String Date2 = formatter.format(dropdate);

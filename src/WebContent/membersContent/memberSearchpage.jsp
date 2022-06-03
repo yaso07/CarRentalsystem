@@ -80,14 +80,20 @@
    
   </head>
   <body>
+ <% 
+  HttpServletResponse httpResponse = (HttpServletResponse) response;
+		httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+		httpResponse.setHeader("Pragma", "no-cache"); // HTTP 1.0
+		httpResponse.setDateHeader("Expires", 0);
+%>
 <%
- String username=(String)session.getAttribute("username");
- if(username==null)
-  {
-    response.sendRedirect("adminlogin.jsp");
-  }
- 
- %>
+ String USER=(String)session.getAttribute("name");
+   if(USER==null)
+   {
+	   response.sendRedirect("../userlogin.jsp");
+	  
+   }
+   %>
  
 <main>
   

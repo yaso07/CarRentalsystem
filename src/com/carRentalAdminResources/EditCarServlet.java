@@ -36,11 +36,13 @@ public class EditCarServlet extends HttpServlet {
 		 String vehicle=req.getParameter("vehicle");
 		 Long price=(long)Integer.parseInt(req.getParameter("price"));
 		 String type=req.getParameter("options");
+		  Integer noOfCars=Integer.parseInt(req.getParameter("available"));
 		 
 		 Addcar car=new Addcar();
 		 car.setVehicleBrands(vehicle);
 		 car.setPrice(price);
 		 car.setType(type);
+		  car.setNoOfCars(noOfCars);
 		 
 		 
 		 try {

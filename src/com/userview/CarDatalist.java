@@ -40,19 +40,19 @@ public class CarDatalist {
 		{
 		case "high":
 		
-		   rs=Range.query();
-		   set=Range.setRangeWDOption(rs,car_option);
+		    
+		   set=Range.setRangeWDOption("asc",car_option);
 		   
 			break;
 		case "low":
 			
-		    rs=lowRange.query();
-		    set=Range.setRangeWDOption(rs,car_option);
+		  
+		    set=Range.setRangeWDOption("desc",car_option);
 		   break;
 		case "mid":
 			
-			rs=midRange.query();
-			  set=Range.setRangeWDOption(rs,car_option);
+			 
+			  set=Range.setRangeWDOption("asc",car_option);
 	     }
 		
 	 

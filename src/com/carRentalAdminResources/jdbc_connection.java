@@ -5,10 +5,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class jdbc_connection {
+	static Connection c = null;
 	
 	public static Connection getconnect() throws ClassNotFoundException
 	{
-		Connection c = null;
+		
 		 
 	  
 		 

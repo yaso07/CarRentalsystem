@@ -118,6 +118,24 @@
     </style>
 </head>
 <body>
+<%
+   	HttpServletResponse httpResponse = (HttpServletResponse) response;
+	httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+	httpResponse.setHeader("Pragma", "no-cache"); // HTTP 1.0
+	httpResponse.setDateHeader("Expires", 0);
+%>
+<%
+
+String  a=(String)session.getAttribute("alert");
+if( a!=null && a.equals("alert"))
+{
+	%>
+	<script>
+	   alert("cancelled successfully");
+	</script>
+<% session.setAttribute("alert", "null"); }%>
+
+
    <%
    String user=(String)session.getAttribute("name");
    if(user==null)
@@ -237,9 +255,12 @@
        ArrayList<bookingdetails> bookinglist=bookingdetails.bookinghistory((String)session.getAttribute("name")); 
    %>  
       <h1>Recent bookings</h1>
-         <a href="../CarRentalViewpage.jsp" id="home" class="btn btn-primary btn-lg"  type="submit">Home</a>
+         <a href="../UserFirstpage.jsp" id="home" class="btn btn-primary btn-lg"  type="submit">Home</a>
       <div class="dis">
-       <% for(bookingdetails book:bookinglist){ %>
+       <% for(bookingdetails book:bookinglist){
+    	   
+    	  
+    	   %>
           <div class="box">
         
 			      <div class="col2">
@@ -251,7 +272,7 @@
 					                <h4>&#8377;<%=book.getTotalcost() %></h4>
 					          </div>
 					         
-					    <a href="../Deletebooking?name=<%=book.getId() %>"  class="btn btn-primary" id="termi">
+					    <a href="../Deletebooking?name=<%=book.getId() %>" onclick="alert("Cancelled successfully")" class="btn btn-primary" id="termi">
                          cancel
                         </a>
                         
